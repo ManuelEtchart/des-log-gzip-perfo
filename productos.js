@@ -14,8 +14,9 @@ productos.get('/:id?', async (req,res) => {
     try {
         if (req.params.id === undefined) {
             res.json(await productoMonDB.getAll())
+        }else{
+            res.json(await productoMonDB.getById(req.params.id))
         }
-        res.json(await productoMonDB.getById(req.params.id))
     } catch (error) {
         console.log(error, "Hubo un error");
     }

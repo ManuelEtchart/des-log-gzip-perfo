@@ -3,10 +3,10 @@ import CarritoDaoMongoDB from './src/DAOs/carritoDaoMongoDB.js';
 const carrito = express.Router();
 
 
-const carritoMonDB = new CarritoDaoMongoDB()
+const carritoMonDB = new CarritoDaoMongoDB();
 
 carrito.use(express.json());
-carrito.use(express.urlencoded({extended: true}))
+carrito.use(express.urlencoded({extended: true}));
 
 carrito.post('', async (req,res) => {
     try {
@@ -27,13 +27,14 @@ carrito.delete('/:id', async (req,res) => {
     } catch (error) {
         console.log(error, "Hubo un error");
     }
-})
+});
 
 carrito.get('/:id?/productos', async (req,res) => {
     if(req.params.id === undefined){
         res.send(await carritoMonDB.getAll())
-    }
-    res.json(await carritoMonDB.getById(req.params.id))
+    }else{
+        res.json(await carritoMonDB.getById(req.params.id))
+    } 
 })
 
 carrito.post('/:id/productos/:id_prod', async (req,res) => {
