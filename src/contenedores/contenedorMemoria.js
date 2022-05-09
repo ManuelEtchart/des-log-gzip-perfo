@@ -1,4 +1,4 @@
-import { productoMemoria } from "../../productos.js"
+import { productosMemoria } from "../../productos.js"
 
 class ContenedorMemoria{
     constructor(){
@@ -82,7 +82,7 @@ class ContenedorMemoria{
             return {error: `Carrito ${id} no encontrado`}
         }
 
-        let productoBuscado = productoMemoria.getById(id_prod);
+        let productoBuscado = productosMemoria.getById(id_prod);
 
         if(productoBuscado.nombre === undefined){
             return {error: `Producto ${id} no encontrado`}
