@@ -131,7 +131,7 @@ app.put('*', (req,res) => {
     logger.warn({error: '-2', descripcion: `ruta ${req.url} metodo ${req.method} no implementada`})
 });
 
-const PORT = args.puerto || 3000;
+const PORT = process.openStdin.PORT || 3000;
 
 const server = app.listen(PORT, () => {
    logger.info(`Servidor escuchando en el puerto ${server.address().port}`);
