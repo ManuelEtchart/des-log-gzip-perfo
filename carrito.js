@@ -1,4 +1,6 @@
 import express from 'express';
+import { mensajesMonDB } from './mensajes.js';
+import { productoMonDB } from './productos.js';
 import CarritoDaoMongoDB from './src/DAOs/carritoDaoMongoDB.js';
 const carrito = express.Router();
 
@@ -8,14 +10,23 @@ const carritoMonDB = new CarritoDaoMongoDB();
 carrito.use(express.json());
 carrito.use(express.urlencoded({extended: true}));
 
+carrito.get('', async (req,res)=>{
+    try {
+        res.render('carritos',{carritos: await carritoMonDB.getAll(), mensajes: await mensajesMonDB.getAll()})
+    } catch (error) {
+        console.log(error, "Hubo un error");
+    }
+})
+
 carrito.post('', async (req,res) => {
     try {
-        res.json(await carritoMonDB.save(
+        await carritoMonDB.save(
             {
                 timestamp: Date.now(),
                 productos: []
             }
-        ));
+        );
+        res.redirect('/api/carrito')
     } catch (error) {
         console.log(error, "Hubo un error");
     }
@@ -31,15 +42,16 @@ carrito.delete('/:id', async (req,res) => {
 
 carrito.get('/:id?/productos', async (req,res) => {
     if(req.params.id === undefined){
-        res.send(await carritoMonDB.getAll())
+        res.render('carritos',{carritos: await carritoMonDB.getAll(), mensajes: await mensajesMonDB.getAll()})
     }else{
-        res.json(await carritoMonDB.getById(req.params.id))
+        res.render('carrito', {carritos: await carritoMonDB.getById(req.params.id), mensajes: await mensajesMonDB.getAll(), productos: await productoMonDB.getAll()})
     } 
 })
 
 carrito.post('/:id/productos/:id_prod', async (req,res) => {
     try {
-        res.json(await carritoMonDB.agregarProductoEnCarrito(req.params.id, req.params.id_prod))
+        await carritoMonDB.agregarProductoEnCarrito(req.params.id, req.params.id_prod)
+        res.render('carrito', {carritos: await carritoMonDB.getById(req.params.id), mensajes: await mensajesMonDB.getAll(), productos: await productoMonDB.getAll()})
     } catch (error) {
         console.log(error, "Hubo un error");
     }

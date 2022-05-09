@@ -1,15 +1,28 @@
 import express from 'express';
 import minimist from 'minimist';
 import compression from 'compression';
+import path from 'path'
+import hbs from 'express-handlebars'
 
 const app = express();
 
 app.use(compression());
 //app.use(express.static('public'));
 
-import productos from './productos.js';
+app.set('views', path.join(path.dirname(''), 'src/views'));
+
+app.engine('.hbs', hbs.engine({
+    defaultLayout: 'main',
+    layoutsDir: path.join(app.get('views'), 'layouts'),
+    partialsDir: path.join(app.get('views'), 'partials'),
+    extname: '.hbs',
+}))
+
+app.set('view engine', '.hbs');
+
+import productos, { productoMonDB } from './productos.js';
 import carrito from './carrito.js';
-import mensajes from './mensajes.js'
+import mensajes, { mensajesMonDB } from './mensajes.js'
 
 let options = {alias: {p: 'puerto'}};
 let args = minimist(process.argv, options);
@@ -18,16 +31,27 @@ app.use('/api/carrito', carrito);
 app.use('/api/productos', productos);
 app.use('/api/mensajes', mensajes)
 
-app.get('/api/info', (req,res)=>{
-    res.json({
-        argsEnt: process.argv.slice(2),
-        nomPlat: process.platform,
-        verNode: process.version,
-        memToRev: JSON.stringify(process.memoryUsage().rss),
-        pathExe: process.execPath,
-        procId: process.pid,
-        carProy: process.cwd()
-    });
+app.get('/', async (req,res)=>{
+    res.redirect('/api/productos')
+})
+
+app.get('/api/info', async (req,res)=>{
+    try {
+        res.render('info',{
+            datos:{
+                argsEnt: process.argv.slice(2),
+                nomPlat: process.platform,
+                verNode: process.version,
+                memToRev: JSON.stringify(process.memoryUsage().rss),
+                pathExe: process.execPath,
+                procId: process.pid,
+                carProy: process.cwd()
+            },
+            mensajes: await mensajesMonDB.getAll()
+        });
+    } catch (error) {
+        console.log(error, "Hubo un error");
+    }
 });
 
 app.get('*', (req,res) => {

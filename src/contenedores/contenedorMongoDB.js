@@ -32,7 +32,7 @@ class ContenedorMongoDB {
             if(!mongoose.isObjectIdOrHexString(id)) {
                 return {error: `Objeto ${id} no encontrado`}
             }
-            const docs = await this.coleccion.find({"_id": id})
+            const docs = await this.coleccion.find({"_id": id}).lean()
             if(docs.length === 0){
                 return {error: `Objeto ${id} no encontrado`}
             }else{
@@ -50,7 +50,7 @@ class ContenedorMongoDB {
     async getAll(){
         try {
             await mongoose.connect(URL)
-            const docs = await this.coleccion.find({})
+            const docs = await this.coleccion.find({}).lean()
             if(docs.length === 0){
                 return {'msg': 'No hay objetos agregados'}
             }else{

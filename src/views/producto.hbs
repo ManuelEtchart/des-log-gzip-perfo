@@ -1,0 +1,22 @@
+<div>
+    <table>
+        <tr>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Stock</th>
+            <th>Precio</th>
+            <th>Foto</th>
+        </tr>
+        {{#each producto}}
+        <tr>
+            <td>{{this.nombre}}</td>
+            <td>{{this.descripcion}}</td>
+            <td>{{this.stock}}uni</td>
+            <td>${{this.precio}}</td>
+            <td><img src={{this.foto}}></td>
+        </tr>
+        {{/each}} 
+</table>
+</div>
+<button class="boton"><a href="/">Ver Productos</a></button>
+<button class="boton"><a href="/api/carrito">Ir a Carritos</a></button>
