@@ -3,6 +3,7 @@
     {{#if productos.msg}}
         <p class="aviso">No hay productos</p>
         <button class="boton"><a href="/api/productos/form">Ingresar Productos</a></button>
+        <button class="boton"><a href="/api/carrito">Ir a Carritos</a></button>
     {{else}}
         {{#if productos}}
             <div>
@@ -24,9 +25,6 @@
                         <td><button class="boton"><a href="/api/productos/{{this._id}}">Detalles</a></button></td>
                     </tr>
                 {{/each}}
-                    <tr>
-                        <td><button class="boton"><a href="/api/carrito">Ir a Carritos</a></button></td>
-                    </tr>
                 </table>       
             </div>
         {{/if}}  
