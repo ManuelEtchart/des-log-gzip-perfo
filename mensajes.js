@@ -1,11 +1,11 @@
 import express from 'express';
-import MensajesDaoMongoDB from './src/DAOs/mensajesDaoMongoDB.js';
+import MensajesDaoMemoria from './src/DAOs/mensajesDaoMemoria.js'
 //import {faker} from '@faker-js/faker';
 import { loggerError, logger } from './server.js';
 
 const mensajes = express.Router();
 
-export const mensajesMonDB = new MensajesDaoMongoDB();
+export const mensajesMemoria = new MensajesDaoMemoria();
 
 mensajes.use(express.json());
 mensajes.use(express.urlencoded({extended: true}));
@@ -24,7 +24,7 @@ mensajes.post('', async (req,res) =>{
         let fechaActual = new Date();
         mensaje.fecha = `[(${fechaActual.getDay()}/${fechaActual.getMonth()}/${fechaActual.getFullYear()} ${fechaActual.getHours()}:${fechaActual.getMinutes()}:${fechaActual.getSeconds()})]`;
         //mensaje.avatar = faker.image.avatar();
-        await mensajesMonDB.save(mensaje);
+        await mensajesMemoria.save(mensaje);
         res.redirect(req.headers.referer)
     } catch (error) {
         loggerError.error(`${error} - Hubo un error en ruta ${req.url} metodo ${req.method} implementada`)

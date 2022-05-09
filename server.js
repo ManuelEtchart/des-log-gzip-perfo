@@ -9,7 +9,7 @@ import session from 'express-session';
 import cookieParser from 'cookie-parser';
 import productos from './productos.js';
 import carrito from './carrito.js';
-import mensajes, { mensajesMonDB } from './mensajes.js';
+import mensajes, { mensajesMemoria } from './mensajes.js';
 
 const app = express();
 
@@ -67,7 +67,7 @@ app.use('/api/carrito', carrito);
 app.use('/api/productos', productos);
 app.use('/api/mensajes', mensajes);
 
-app.get('/', async (req,res)=>{
+app.get('/', (req,res)=>{
     logger.info(`ruta ${req.url} metodo ${req.method} implementada`)
     res.redirect('/api/productos')
 });
@@ -96,7 +96,7 @@ app.get('/api/info', async (req,res)=>{
                 procId: process.pid,
                 carProy: process.cwd()
             },
-            mensajes: await mensajesMonDB.getAll()
+            mensajes: await mensajesMemoria.getAll()
         });
     } catch (error) {
         loggerError.error(`${error} - Hubo un error en ruta ${req.url} metodo ${req.method} implementada`)

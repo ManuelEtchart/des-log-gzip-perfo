@@ -1,12 +1,12 @@
 import express from 'express';
-import { mensajesMonDB } from './mensajes.js';
-import { productoMonDB } from './productos.js';
+import { mensajesMemoria } from './mensajes.js';
+import { productosMemoria } from './productos.js';
 import { logger,loggerError } from './server.js';
-import CarritoDaoMongoDB from './src/DAOs/carritoDaoMongoDB.js';
+import MensajesDaoMemoria from './src/DAOs/mensajesDaoMemoria.js'
 const carrito = express.Router();
 
 
-const carritoMonDB = new CarritoDaoMongoDB();
+const carritoMemoria = new MensajesDaoMemoria();
 
 carrito.use(express.json());
 carrito.use(express.urlencoded({extended: true}));
@@ -14,7 +14,7 @@ carrito.use(express.urlencoded({extended: true}));
 carrito.get('', async (req,res)=>{
     logger.info(`ruta ${req.url} metodo ${req.method} implementada`)
     try {
-        res.render('carritos',{carritos: await carritoMonDB.getAll(), mensajes: await mensajesMonDB.getAll()})
+        res.render('carritos',{carritos: await carritoMemoria.getAll(), mensajes: await mensajesMemoria.getAll()})
     } catch (error) {
         loggerError.error(`${error} - Hubo un error en ruta ${req.url} metodo ${req.method} implementada`)
     }
@@ -23,7 +23,7 @@ carrito.get('', async (req,res)=>{
 carrito.post('', async (req,res) => {
     logger.info(`ruta ${req.url} metodo ${req.method} implementada`)
     try {
-        await carritoMonDB.save(
+        await carritoMemoria.save(
             {
                 timestamp: Date.now(),
                 productos: []
@@ -38,7 +38,7 @@ carrito.post('', async (req,res) => {
 carrito.delete('/:id', async (req,res) => {
     logger.info(`ruta ${req.url} metodo ${req.method} implementada`)
     try {
-        res.json(await carritoMonDB.deleteById(req.params.id))
+        res.json(await carritoMemoria.deleteById(req.params.id))
     } catch (error) {
         loggerError.error(`${error} - Hubo un error en ruta ${req.url} metodo ${req.method} implementada`)
     }
@@ -48,9 +48,9 @@ carrito.get('/:id?/productos', async (req,res) => {
     logger.info(`ruta ${req.url} metodo ${req.method} implementada`)
     try {
         if(req.params.id === undefined){
-            res.render('carritos',{carritos: await carritoMonDB.getAll(), mensajes: await mensajesMonDB.getAll()})
+            res.render('carritos',{carritos: await carritoMemoria.getAll(), mensajes: await mensajesMemoria.getAll()})
         }else{
-            res.render('carrito', {carritos: await carritoMonDB.getById(req.params.id), mensajes: await mensajesMonDB.getAll(), productos: await productoMonDB.getAll()})
+            res.render('carrito', {carritos: await carritoMemoria.getById(req.params.id), mensajes: await mensajesMemoria.getAll(), productos: await productosMemoria.getAll()})
         } 
     } catch (error) {
         loggerError.error(`${error} - Hubo un error en ruta ${req.url} metodo ${req.method} implementada`)
@@ -60,8 +60,8 @@ carrito.get('/:id?/productos', async (req,res) => {
 carrito.post('/:id/productos/:id_prod', async (req,res) => {
     logger.info(`ruta ${req.url} metodo ${req.method} implementada`)
     try {
-        await carritoMonDB.agregarProductoEnCarrito(req.params.id, req.params.id_prod)
-        res.render('carrito', {carritos: await carritoMonDB.getById(req.params.id), mensajes: await mensajesMonDB.getAll(), productos: await productoMonDB.getAll()})
+        await carritoMemoria.agregarProductoEnCarrito(req.params.id, req.params.id_prod)
+        res.render('carrito', {carritos: await carritoMemoria.getById(req.params.id), mensajes: await mensajesMemoria.getAll(), productos: await productosMemoria.getAll()})
     } catch (error) {
         loggerError.error(`${error} - Hubo un error en ruta ${req.url} metodo ${req.method} implementada`)
     }
@@ -70,7 +70,7 @@ carrito.post('/:id/productos/:id_prod', async (req,res) => {
 carrito.delete('/:id/productos/:id_prod', async (req,res) => {
     logger.info(`ruta ${req.url} metodo ${req.method} implementada`)
     try {
-        res.json( await carritoMonDB.borrarProductoEnCarrito(req.params.id,req.params.id_prod))
+        res.json( await carritoMemoria.borrarProductoEnCarrito(req.params.id,req.params.id_prod))
     } catch (error) {
         loggerError.error(`${error} - Hubo un error en ruta ${req.url} metodo ${req.method} implementada`)
     }
