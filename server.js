@@ -48,7 +48,7 @@ app.engine('.hbs', hbs.engine({
 }))
 
 app.set('view engine', '.hbs');
-
+/*
 app.use(cookieParser())
 app.use(session({
    secret: '123456789!#$%&/()',
@@ -59,7 +59,7 @@ app.use(session({
       maxAge: 600000
    }
 }));
-
+*/
 let options = {alias: {p: 'puerto'}};
 let args = minimist(process.argv, options);
 
@@ -131,10 +131,10 @@ app.put('*', (req,res) => {
     logger.warn({error: '-2', descripcion: `ruta ${req.url} metodo ${req.method} no implementada`})
 });
 
-const PORT = process.openStdin.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 
 const server = app.listen(PORT, () => {
-   logger.info(`Servidor escuchando en el puerto ${server.address().port}`);
+   logger.info(`Servidor escuchando en el puerto ${server.address().PORT}`);
 });
 
 server.on("error", error => loggerError.error(error, `Error en servidor ${error}`) ); 
