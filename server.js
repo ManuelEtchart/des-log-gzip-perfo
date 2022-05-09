@@ -134,7 +134,7 @@ app.put('*', (req,res) => {
 const PORT = process.env.PORT || 8080;
 
 const server = app.listen(PORT, () => {
-   logger.info(`Servidor escuchando en el puerto ${server.address().PORT}`);
+   logger.info(`Servidor escuchando en el puerto ${server.address().port}`);
 });
 
 server.on("error", error => loggerError.error(error, `Error en servidor ${error}`) ); 
