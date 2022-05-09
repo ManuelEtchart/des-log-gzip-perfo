@@ -1,33 +1,35 @@
 <p class="titulo">Productos</p>
 <div id="productos">
-    {{#if productos}}
-        <div>
-            <table>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Descripción</th>
-                    <th>Stock</th>
-                    <th>Precio</th>
-                    <th>Foto</th>
-                </tr>
-            {{#each productos}}
-                <tr>
-                    <td>{{this.nombre}}</td>
-                    <td>{{this.descripcion}}</td>
-                    <td>{{this.stock}}uni</td>
-                    <td>${{this.precio}}</td>
-                    <td><img src={{this.foto}}></td>
-                    <td><button class="boton"><a href="/api/productos/{{this._id}}">Detalles</a></button></td>
-                </tr>
-            {{/each}}
-                <tr>
-                    <td><button class="boton"><a href="/api/productos/form">Ingresar Productos</a></button></td>
-                    <td><button class="boton"><a href="/api/carrito">Ir a Carritos</a></button></td>
-                </tr>
-            </table>       
-        </div>  
-    {{else}}
+    {{#if productos.msg}}
         <p class="aviso">No hay productos</p>
+    {{else}}
+        {{#if productos}}
+            <div>
+                <table>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Stock</th>
+                        <th>Precio</th>
+                        <th>Foto</th>
+                    </tr>
+                {{#each productos}}
+                    <tr>
+                        <td>{{this.nombre}}</td>
+                        <td>{{this.descripcion}}</td>
+                        <td>{{this.stock}}uni</td>
+                        <td>${{this.precio}}</td>
+                        <td><img src={{this.foto}}></td>
+                        <td><button class="boton"><a href="/api/productos/{{this._id}}">Detalles</a></button></td>
+                    </tr>
+                {{/each}}
+                    <tr>
+                        <td><button class="boton"><a href="/api/productos/form">Ingresar Productos</a></button></td>
+                        <td><button class="boton"><a href="/api/carrito">Ir a Carritos</a></button></td>
+                    </tr>
+                </table>       
+            </div>
+        {{/if}}  
     {{/if}}
 </div>
 

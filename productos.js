@@ -14,7 +14,7 @@ const administrador = true;
 
 productos.get('/form', async (req,res)=>{
     logger.info(`ruta ${req.url} metodo ${req.method} implementada`)
-    res.render('productosForm', {mensajes: await mensajesMonDB.getAll()});
+    res.render('productosForm', {mensajes: await mensajesMemoria.getAll()});
 });
 
 productos.get('/:id?', async (req,res) => {
