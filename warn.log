@@ -1,0 +1,4 @@
+[2022-05-09T06:43:49.911] [WARN] custom - {
+  error: '-2',
+  descripcion: 'ruta /favicon.ico metodo GET no implementada'
+}

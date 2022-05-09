@@ -1,6 +1,7 @@
 import express from 'express';
 import MensajesDaoMongoDB from './src/DAOs/mensajesDaoMongoDB.js';
 import {faker} from '@faker-js/faker';
+import { loggerError, logger } from './server.js';
 
 const mensajes = express.Router();
 
@@ -10,6 +11,7 @@ mensajes.use(express.json());
 mensajes.use(express.urlencoded({extended: true}));
 
 mensajes.post('', async (req,res) =>{
+    logger.info(`ruta ${req.url} metodo ${req.method} implementada`)
     try {
         const mensaje = {
             email: req.body.email,
@@ -25,7 +27,7 @@ mensajes.post('', async (req,res) =>{
         await mensajesMonDB.save(mensaje);
         res.redirect(req.headers.referer)
     } catch (error) {
-        console.log(error, "Hubo un error");
+        loggerError.error(`${error} - Hubo un error en ruta ${req.url} metodo ${req.method} implementada`)
     }
     
 });
