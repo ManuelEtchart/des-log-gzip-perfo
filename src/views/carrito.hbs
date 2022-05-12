@@ -24,7 +24,10 @@
         {{/each}}
     </table>        
 </div>
-{{#if productos}}
+{{#if productos.msg}}
+        <p class="aviso">No hay productos</p>
+{{else}}
+    {{#if productos}}
         <div>
             <table>
                 <tr>
@@ -48,13 +51,11 @@
                     </td>-->
                 </tr>
             {{/each}}
-                <tr>
-                    <td><button class="boton"><a href="/api/productos/form">Ingresar Productos</a></button></td>
-                    <td><button class="boton"><a href="/api/carrito">Ir a Carritos</a></button></td>
-                    <td><button class="boton"><a href="/api/productos">Ver productos</a></button></td>
-                </tr>
+                
             </table>       
-        </div>  
-    {{else}}
-        <p class="aviso">No hay productos</p>
+        </div>
     {{/if}}
+{{/if}}
+<button class="boton"><a href="/api/productos/form">Ingresar Productos</a></button>
+<button class="boton"><a href="/api/carrito">Ir a Carritos</a></button>
+<button class="boton"><a href="/api/productos">Ver productos</a></button>

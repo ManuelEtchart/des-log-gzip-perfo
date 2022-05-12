@@ -2,11 +2,11 @@ import express from 'express';
 import { mensajesMemoria } from './mensajes.js';
 import { productosMemoria } from './productos.js';
 import { logger,loggerError } from './server.js';
-import MensajesDaoMemoria from './src/DAOs/mensajesDaoMemoria.js'
+import CarritoDaoMemoria from './src/DAOs/carritoDaoMemoria.js'
 const carrito = express.Router();
 
 
-const carritoMemoria = new MensajesDaoMemoria();
+const carritoMemoria = new CarritoDaoMemoria();
 
 carrito.use(express.json());
 carrito.use(express.urlencoded({extended: true}));

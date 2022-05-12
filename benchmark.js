@@ -19,7 +19,7 @@ function run(url) {
   })
 }
 
-console.log('Running all benchmarks in parallel ...')
+console.log('Running benchmark ...')
 
 
-run('')
+run('http://localhost:8080/api/info')

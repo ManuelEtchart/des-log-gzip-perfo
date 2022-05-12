@@ -2,8 +2,6 @@
 <div id="productos">
     {{#if productos.msg}}
         <p class="aviso">No hay productos</p>
-        <button class="boton"><a href="/api/productos/form">Ingresar Productos</a></button>
-        <button class="boton"><a href="/api/carrito">Ir a Carritos</a></button>
     {{else}}
         {{#if productos}}
             <div>
@@ -29,6 +27,8 @@
             </div>
         {{/if}}  
     {{/if}}
+    <button class="boton"><a href="/api/productos/form">Ingresar Productos</a></button>
+    <button class="boton"><a href="/api/carrito">Ir a Carritos</a></button>
 </div>
 
     

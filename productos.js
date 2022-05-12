@@ -1,11 +1,11 @@
 import express from 'express';
 import { mensajesMemoria } from './mensajes.js';
 import { loggerError, logger } from './server.js';
-import MensajesDaoMemoria from './src/DAOs/mensajesDaoMemoria.js'
+import ProductosDaoMemoria from './src/DAOs/productosDaoMemoria.js'
 
 const productos = express.Router();
 
-export const productosMemoria = new MensajesDaoMemoria();
+export const productosMemoria = new ProductosDaoMemoria();
 
 productos.use(express.json());
 productos.use(express.urlencoded({extended: true}));
