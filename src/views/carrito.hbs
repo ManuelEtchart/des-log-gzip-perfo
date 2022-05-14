@@ -4,7 +4,7 @@
             <th>id</th>
         </tr>
         <tr>
-            <td>{{carritos.[0]._id}}</td>
+            <td>{{carritos.id}}</td>
         </tr>
     </table>
     <table>
@@ -12,7 +12,7 @@
             <th>Productos Agregados</th>
             <th>Precio</th>
         </tr>
-        {{#each carritos.[0].productos}}
+        {{#each carritos.productos}}
             <tr>
                 <td>{{this.nombre}}</td>
                 <td>${{this.precio}}</td>
@@ -41,7 +41,7 @@
                         <td>${{this.precio}}</td>
                         <td><img src={{this.foto}}></td>
                         <td>
-                            <form action=/api/carrito/{{../carritos.[0]._id}}/productos/{{this._id}} method="post">
+                            <form action=/api/carrito/{{../carritos.id}}/productos/{{this.id}} method="post">
                                 <input type="submit" value="Agregar a Carrito" class="boton">
                             </form>
                         </td>

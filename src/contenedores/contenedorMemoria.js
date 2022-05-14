@@ -7,23 +7,23 @@ class ContenedorMemoria{
     }
 
     save(obj){
-        obj._id = this.contadorObjetos
+        obj.id = this.contadorObjetos
         
         this.array.push(obj)
         
-        this.contadorObjetos = this.array[this.array.length - 1]._id + 1;
+        this.contadorObjetos = this.array[this.array.length - 1].id + 1;
 
         return {'Objeto agregado': obj}
     }
 
     getById(id){
-        let objetoBuscado = this.array.find(prod => prod._id === id);
-
+        let objetoBuscado = this.array.find(prod => prod.id == id)
+        console.log(objetoBuscado)
         if(objetoBuscado === undefined){
             return {error: `Objeto ${id} no encontrado`}
+        }else{
+           return objetoBuscado 
         }
-
-        return objetoBuscado
     }
 
     getAll(){
@@ -35,7 +35,7 @@ class ContenedorMemoria{
     }
 
     updateById(id, cambios){
-        let objetoBuscado = this.array.find(prod => prod._id === id);
+        let objetoBuscado = this.array.find(prod => prod.id == id);
 
         if(objetoBuscado === undefined){
             return {error: `Objeto ${id} no encontrado`}
@@ -43,10 +43,10 @@ class ContenedorMemoria{
         console.log(cambios)
         objetoBuscado = cambios;
 
-        objetoBuscado._id = id
+        objetoBuscado.id = id
         objetoBuscado.fecha = Date.now()
 
-        this.array = this.array.filter(prod => prod._id != id);
+        this.array = this.array.filter(prod => prod.id != id);
 
         this.array.push(objetoBuscado);
 
@@ -54,13 +54,13 @@ class ContenedorMemoria{
     }
 
     deleteById(id){
-        let objetoBuscado = this.array.find(prod => prod._id === id);
+        let objetoBuscado = this.array.find(prod => prod.id == id);
 
         if(objetoBuscado === undefined){
             return {error: `Objeto ${id} no encontrado`}
         }
 
-        this.array = this.array.filter(prod => prod._id != id);
+        this.array = this.array.filter(prod => prod.id != id);
         
         if(this.array.length === 0){
             return {'msg': 'Todos los objetos han sido eliminados'}
@@ -76,7 +76,7 @@ class ContenedorMemoria{
     }
 
     agregarProductoEnCarrito(id, id_prod){
-        let carritoBuscado = this.array.find(carr => carr._id === id);
+        let carritoBuscado = this.array.find(carr => carr.id == id);
 
         if(carritoBuscado === undefined){
             return {error: `Carrito ${id} no encontrado`}
@@ -88,7 +88,7 @@ class ContenedorMemoria{
             return {error: `Producto ${id} no encontrado`}
         }
 
-        this.array = this.array.filter(carr => carr._id != id);
+        this.array = this.array.filter(carr => carr.id != id);
 
         carritoBuscado.productos = [...carritoBuscado.productos, productoBuscado];
 
@@ -98,7 +98,7 @@ class ContenedorMemoria{
     }
 
     borrarProductoEnCarrito(id, id_prod){
-        let carritoBuscado = this.array.find(carr => carr._id == id);
+        let carritoBuscado = this.array.find(carr => carr.id == id);
 
         if(carritoBuscado === undefined){
             res.json({error: `Carrito ${id} no encontrado`})
@@ -106,9 +106,9 @@ class ContenedorMemoria{
 
         let productosCarrito = carritoBuscado.productos;
 
-        let productosModificados = productosCarrito.filter(prod => prod._id != id_prod);
+        let productosModificados = productosCarrito.filter(prod => prod.id != id_prod);
 
-        this.array = this.array.filter(carr => carr._id != id);
+        this.array = this.array.filter(carr => carr.id != id);
 
         carritoBuscado.productos = productosModificados;
 
