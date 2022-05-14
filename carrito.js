@@ -61,7 +61,7 @@ carrito.post('/:id/productos/:id_prod', async (req,res) => {
     logger.info(`ruta ${req.url} metodo ${req.method} implementada`)
     try {
         await carritoMemoria.agregarProductoEnCarrito(req.params.id, req.params.id_prod)
-        res.render('carrito', {carritos: await carritoMemoria.getById(req.params.id), mensajes: await mensajesMemoria.getAll(), productos: await productosMemoria.getAll()})
+        res.redirect(`/api/carrito/${req.params.id}/productos`)
     } catch (error) {
         loggerError.error(`${error} - Hubo un error en ruta ${req.url} metodo ${req.method} implementada`)
     }

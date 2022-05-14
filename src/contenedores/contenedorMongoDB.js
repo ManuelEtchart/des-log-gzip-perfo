@@ -132,7 +132,6 @@ class ContenedorMongoDB {
             const productoBuscadoObj = productoBuscadoArray[0]
 
             if(productoBuscadoObj.nombre === undefined){
-                console.log(productoBuscado)
                 return {error: `Producto ${id_prod} no encontrado`}
             }
 

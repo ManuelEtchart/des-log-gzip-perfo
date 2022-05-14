@@ -3,24 +3,20 @@
         <tr>
             <th>id</th>
         </tr>
-    {{#each carritos}}
         <tr>
-            <td>{{this._id}}</td>
+            <td>{{carritos.[0]._id}}</td>
         </tr>
-    {{/each}}
     </table>
     <table>
         <tr>
             <th>Productos Agregados</th>
             <th>Precio</th>
         </tr>
-        {{#each carritos}}
-            {{#each this.productos}}
-                <tr>
-                    <td>{{this.nombre}}</td>
-                    <td>${{this.precio}}</td>
-                </tr>
-            {{/each}}
+        {{#each carritos.[0].productos}}
+            <tr>
+                <td>{{this.nombre}}</td>
+                <td>${{this.precio}}</td>
+            </tr>
         {{/each}}
     </table>        
 </div>
@@ -37,21 +33,20 @@
                     <th>Precio</th>
                     <th>Foto</th>
                 </tr>
-            {{#each productos}}
-                <tr>
-                    <td>{{this.nombre}}</td>
-                    <td>{{this.descripcion}}</td>
-                    <td>{{this.stock}}uni</td>
-                    <td>${{this.precio}}</td>
-                    <td><img src={{this.foto}}></td>
-                    <!--<td>
-                        <form action='' method="post">
-                            <input type="submit" value="Agregar a Carrito" class="boton">
-                        </form>
-                    </td>-->
-                </tr>
-            {{/each}}
-                
+                {{#each productos}}
+                    <tr>
+                        <td>{{this.nombre}}</td>
+                        <td>{{this.descripcion}}</td>
+                        <td>{{this.stock}}uni</td>
+                        <td>${{this.precio}}</td>
+                        <td><img src={{this.foto}}></td>
+                        <td>
+                            <form action=/api/carrito/{{../carritos.[0]._id}}/productos/{{this._id}} method="post">
+                                <input type="submit" value="Agregar a Carrito" class="boton">
+                            </form>
+                        </td>
+                    </tr>
+                {{/each}}
             </table>       
         </div>
     {{/if}}
